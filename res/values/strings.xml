@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Maple Syrup Calculator</string>
+    <string name="lbl_sap_height">Sap Height in Kettle</string>
+    <string name="lbl_sugar_content">Sugar Content</string>
+<string name="lbl_kettle_diam">Kettle Diameter</string>
+<string name="lbl_sap_volume">Sap Volume</string>
+<string name="empty_string">empty string</string>
+<string name="lbl_evap_time">Evaporation Time</string>
+<string name="lbl_est_syrup_volume">Est. Syrup Volume</string>
+<string name="lbl_gals">gal</string>
+<string name="lbl_inches">in</string>
+<string name="lbl_gal_hour">gals/hr</string>
+<string name="lbl_hours">hrs</string>
+<string name="lbl_percent">pct</string>
+<string name="lbl_calculate">Calculate</string>
+</resources>
