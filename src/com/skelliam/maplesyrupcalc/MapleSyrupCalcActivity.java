@@ -22,8 +22,10 @@ public class MapleSyrupCalcActivity extends Activity implements OnClickListener 
     private double volume;
     private double volume_gals;
     private double final_volume_gals;
-    private double starting_sugar;
+    private double starting_sugar_brix;
+    private double starting_sugar_sg;
     private double evap_time;
+    private double test;
     
     final private double PI = 3.14159;
     final private double CUIN_TO_GALS = 231;
@@ -38,9 +40,13 @@ public class MapleSyrupCalcActivity extends Activity implements OnClickListener 
     }
     
     private void getInputs() {
+        DensityConverter dc = new DensityConverter();
         height = Double.parseDouble(txtHeight.getText().toString());
         diam = Double.parseDouble(txtDiam.getText().toString());
-        starting_sugar = Double.parseDouble(txtSugar.getText().toString());
+        starting_sugar_brix = Double.parseDouble(txtSugar.getText().toString());
+        starting_sugar_sg = dc.getSGFromBrix(starting_sugar_brix);
+        test = dc.getBrixFromSG(1.1);
+        // final sugar comes from prefs
     }
     
     private void calcVolume() {
@@ -50,16 +56,18 @@ public class MapleSyrupCalcActivity extends Activity implements OnClickListener 
     
     /* Starting_Volume/Final_Syrup_Volume = Final_Sugar/Starting_Sugar */
     private void calcFinalVolume() {
-        final_volume_gals = volume_gals/(FINAL_SUGAR/starting_sugar);
+        if ( (FINAL_SUGAR != starting_sugar_brix) && (FINAL_SUGAR != 0) )
+            final_volume_gals = volume_gals/(FINAL_SUGAR/starting_sugar_brix);
     }
     
     private void calcEvapTime() {
+        if (EVAP_RATE != 0)
         evap_time = (volume_gals-final_volume_gals)/EVAP_RATE;
     }
     
     public void calculateAll() {
-        if (starting_sugar < 0.1) {
-            this.starting_sugar = 0.1;
+        if (starting_sugar_brix < 0.1) {
+            this.starting_sugar_brix = 0.1;
         }
         getInputs();
         calcVolume();
@@ -73,8 +81,12 @@ public class MapleSyrupCalcActivity extends Activity implements OnClickListener 
             case R.id.btnCalculate:
                 calculateAll();
                 txtSapVolume.setText(String.format("%f", volume_gals));
-                txtSyrupVol.setText(String.format("%f", final_volume_gals));
-                txtEvapTime.setText(String.format("%f", evap_time));
+                //txtSyrupVol.setText(String.format("%f", final_volume_gals));
+                //txtEvapTime.setText(String.format("%f", evap_time));
+                
+                /* Debugging */
+                txtEvapTime.setText(String.format("%f", starting_sugar_sg));
+                txtSyrupVol.setText(String.format("%f", test));
         }
     }
     
